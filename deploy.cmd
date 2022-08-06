@@ -92,16 +92,17 @@ IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
   IF !ERRORLEVEL! NEQ 0 goto error
 )
 
+  echo "Installing corepack.."
+  call :ExecuteCmd npm i -g corepack
+  echo "Setting yarn to path.."
+  SET PATH=%PATH%;D:\local\AppData\npm
+  
 :: Technically, setting up a project with yarn 2 is using Zero-Installs by default
 :: If .yarn/cache is checked in and pushed, then we technically shouldn't even need to run the below - see this: https://yarnpkg.com/getting-started/install#initializing-your-project
 :: However, if the project is NOT set to use 'Zero-Installs', the below can be used to change the yarn version to stable
 :: 3. Install npm packages
 IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
-  pushd "%DEPLOYMENT_TARGET%"
-  echo "Installing corepack.."
-  call :ExecuteCmd npm i -g corepack
-  echo "Setting yarn to path.."
-  SET PATH=%PATH%;D:\local\AppData\npm  
+  pushd "%DEPLOYMENT_TARGET%"  
   echo "Setting yarn version to stable.."
   call :ExecuteCmd yarn set version stable
   echo "Running yarn install.."
