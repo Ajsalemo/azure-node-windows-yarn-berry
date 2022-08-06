@@ -1,0 +1,10 @@
+{
+  "name": "azure-node-windows-yarn-berry",
+  "packageManager": "yarn@3.2.2",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
