@@ -102,7 +102,7 @@ SET PATH=%PATH%;D:\local\AppData\npm
 IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   IF EXIST "%DEPLOYMENT_TARGET%\.yarn\cache\" (
     pushd "%DEPLOYMENT_TARGET%"  
-    echo ".yarn/cache checked in for 'Zero Installs, pushing cache and not running install.."
+    echo ".yarn/cache checked in for 'Zero Installs', pushing cache and not running install.."
     IF !ERRORLEVEL! NEQ 0 goto error
     popd
   )
