@@ -106,7 +106,6 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
     IF !ERRORLEVEL! NEQ 0 goto error
     popd
   )
-  echo ".yarn/cache not found, skipping.."
 )
 
 :: If NOT using 'Zero-Installs'
@@ -114,16 +113,19 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
 :: If .yarn/cache is checked in to source and pushed, then we shouldn't even need to run the below - see this: https://yarnpkg.com/getting-started/install#initializing-your-project
 :: However, if the project is NOT set to use 'Zero-Installs', the below can be used to change the yarn version to stable
 :: 3. Install yarn packages
-IF EXIST "%DEPLOYMENT_TARGET%\package.json" IF NOT EXIST "%DEPLOYMENT_TARGET%\.yarn\cache\" (
-  pushd "%DEPLOYMENT_TARGET%"  
-  echo "Setting yarn version to stable.."
-  call :ExecuteCmd yarn set version stable
-  echo "Checking yarn version.."
-  call :ExecuteCmd yarn -v
-  echo "Running yarn install.."
-  call :ExecuteCmd yarn install 
-  IF !ERRORLEVEL! NEQ 0 goto error
-  popd
+IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
+  IF NOT EXIST "%DEPLOYMENT_TARGET%\.yarn\cache\" (
+    pushd "%DEPLOYMENT_TARGET%"  
+    echo ".yarn/cache not found, configuring yarn.."
+    echo "Setting yarn version to stable.."
+    call :ExecuteCmd yarn set version stable
+    echo "Checking yarn version.."
+    call :ExecuteCmd yarn -v
+    echo "Running yarn install.."
+    call :ExecuteCmd yarn install 
+    IF !ERRORLEVEL! NEQ 0 goto error
+    popd
+  )
 )
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
