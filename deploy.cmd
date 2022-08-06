@@ -93,7 +93,7 @@ IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
 )
 
 echo "Setting yarn to path.."
-SET PATH=%PATH%;D:\local\AppData\npm
+call :ExecuteCmd SET PATH=%PATH%;D:\local\AppData\npm
 
 :: Technically, setting up a project with yarn 2 is using Zero-Installs by default
 :: If .yarn/cache is checked in and pushed, then we technically shouldn't even need to run the below - see this: https://yarnpkg.com/getting-started/install#initializing-your-project
