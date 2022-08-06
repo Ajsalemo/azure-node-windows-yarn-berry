@@ -33,6 +33,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
+            ["date-fns", "npm:2.29.1"],\
             ["express", "npm:4.18.1"]\
           ],\
           "linkType": "SOFT"\
@@ -63,6 +64,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["azure-node-windows-yarn-berry", "workspace:."],\
+            ["date-fns", "npm:2.29.1"],\
             ["express", "npm:4.18.1"]\
           ],\
           "linkType": "SOFT"\
@@ -142,6 +144,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/cookie-signature-npm-1.0.6-93f325f7f0-f4e1b0a98a.zip/node_modules/cookie-signature/",\
           "packageDependencies": [\
             ["cookie-signature", "npm:1.0.6"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["date-fns", [\
+        ["npm:2.29.1", {\
+          "packageLocation": "./.yarn/cache/date-fns-npm-2.29.1-8c07562fd8-9d07f77dff.zip/node_modules/date-fns/",\
+          "packageDependencies": [\
+            ["date-fns", "npm:2.29.1"]\
           ],\
           "linkType": "HARD"\
         }]\
