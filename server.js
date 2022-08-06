@@ -11,9 +11,13 @@ const port = process.env.PORT || 3000;
 
 const homeController = require("./controllers/homeController.js");
 const solarFlareController = require("./controllers/solarFlareController.js");
+const solarEnergeticParticleController = require("./controllers/solarEnergeticParticleController.js");
+const coronalMassEjectionController = require("./controllers/coronalMassEjectionController.js");
 
 app.use("/", homeController);
 app.use("/api/nasa/flr", solarFlareController);
+app.use("/api/nasa/sep", solarEnergeticParticleController);
+app.use("/api/nasa/cme", coronalMassEjectionController);
 app.use("*", homeController);
 
 app.listen(port, () =>
