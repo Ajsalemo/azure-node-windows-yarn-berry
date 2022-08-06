@@ -98,6 +98,7 @@ echo "Setting yarn to path.."
 SET PATH=%PATH%;D:\local\AppData\npm
 
 :: IF USING 'Zero Installs'
+:: This means that .yarn/cache should be checked into source, which is recommended, per here: https://yarnpkg.com/getting-started/install#initializing-your-project
 IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   IF EXIST "%DEPLOYMENT_TARGET%\.yarn\cache\" (
     pushd "%DEPLOYMENT_TARGET%"  
@@ -109,7 +110,7 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
 )
 
 :: If NOT using 'Zero-Installs'
-:: Technically, setting up a project with yarn 2 is using Zero-Installs by default
+:: Technically, setting up a project with 'yarn init 2' is using Zero-Installs by default
 :: If .yarn/cache is checked in to source and pushed, then we shouldn't even need to run the below - see this: https://yarnpkg.com/getting-started/install#initializing-your-project
 :: However, if the project is NOT set to use 'Zero-Installs', the below can be used to change the yarn version to stable
 :: 3. Install yarn packages
