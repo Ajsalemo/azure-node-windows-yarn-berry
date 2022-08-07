@@ -28,17 +28,16 @@ stages:
 
     - script: |
         # .yarn/cache/
-        if test -f "$(YARN_CACHE)"; then
-            echo "$(YARN_CACHE) exists, skipping installs"
-        else
-          echo "$(YARN_CACHE) doesn't exist, running set yarn version and installing.."
-          echo "Setting stable yarn version.."
-          yarn set stable version
+        IF EXIST "%YARN_CACHE%" (
+          echo ".yarn/cache checked in for 'Zero Installs', pushing cache and not running install.."
+        ) ELSE IF NOT EXIST "%YARN_CACHE%" (
+          echo "%YARN_CACHE%" doesn't exist, running yarn set version and install.."
+          yarn set version stable
           echo "Checking yarn version.."
           yarn -v
           echo "Running yarn install.."
           yarn install
-        fi
+        )
       displayName: 'Check for .yarn cache'
 
     - task: ArchiveFiles@2
