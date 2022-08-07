@@ -8,10 +8,10 @@ trigger:
 
 variables:
   # Web app name
-  webAppName: $(webAppNameVar)
+  webAppName: '$(webAppNameVar)'
   # Runs with iisnode were tested with 'windows-latest'
   # This can also be set as 'ubuntu-latest' if wanting to deploy to a Linux App Service
-  vmImageName: $(vmImageNameVar)
+  vmImageName: '$(vmImageNameVar)'
 
 stages:
 - stage: Build
@@ -20,7 +20,7 @@ stages:
   - job: Build
     displayName: Build
     pool:
-      vmImage: $(vmImageName)
+      vmImage: '$(vmImageName)'
 
     steps:
     - task: NodeTool@0
@@ -63,7 +63,7 @@ stages:
     displayName: Deploy
     environment: $(webAppNameVar)
     pool:
-      vmImage: $(vmImageName)
+      vmImage: '$(vmImageName)'
     strategy:
       runOnce:
         deploy:
