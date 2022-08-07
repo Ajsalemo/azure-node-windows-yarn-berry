@@ -27,7 +27,7 @@ stages:
       displayName: 'Install Node.js'
 
     - script: |
-        # .yarn/cache/
+        :: .yarn/cache/
         IF EXIST "%YARN_CACHE%" (
           echo ".yarn/cache checked in for 'Zero Installs', pushing cache and not running install.."
         ) ELSE IF NOT EXIST "%YARN_CACHE%" (
