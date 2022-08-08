@@ -27,14 +27,13 @@ stages:
         IF EXIST ".yarn/cache/" (
           echo ".yarn/cache checked in for 'Zero Installs', pushing cache and not running install.."
         ) ELSE IF NOT EXIST ".yarn/cache/" (
-          corepack enable
           echo ".yarn/cache doesn't exist, running yarn set version and install.."
-          echo "Setting yarn version to Berry.."
-          call yarn set version berry
+          echo "Setting yarn version to latest (3.x).."
+          yarn set version stable
           echo "Checking yarn version.."
-          call yarn -v
+          yarn -v
           echo "Running yarn install.."
-          call yarn install
+          yarn install
         )
       displayName: 'Check for .yarn cache'
 
