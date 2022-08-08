@@ -30,7 +30,11 @@ stages:
         :: %YARN_CACHE% is set to the location of .yarn/cache/
         IF EXIST "%YARN_CACHE%" (
           echo "%YARN_CACHE% checked in for 'Zero Installs', pushing cache and not running install.."
-        ) ELSE IF NOT EXIST "%YARN_CACHE%" (
+        )
+      displayName: 'Check for .yarn cache (skip)'
+
+    - script: |
+        IF NOT EXIST "%YARN_CACHE%" (
           echo "%YARN_CACHE%" doesn't exist, running yarn set version and install.."
           echo "Checking config.."
           yarn config -v
@@ -41,7 +45,7 @@ stages:
           echo "Running yarn install.."
           yarn install
         )
-      displayName: 'Check for .yarn cache'
+      displayName: 'Check for .yarn cache (install)'
 
     - task: ArchiveFiles@2
       inputs:
