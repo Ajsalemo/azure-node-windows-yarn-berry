@@ -54,7 +54,7 @@ jobs:
         with:
           name: node-app
 
-      - name: Add AppSettings
+      - name: Set AppSettings
         uses: Azure/appservice-settings@v1
         with:
           app-name: 'node-app'
