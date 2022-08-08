@@ -57,7 +57,7 @@ jobs:
       - name: Set AppSettings
         uses: Azure/appservice-settings@v1
         with:
-          app-name: 'node-app'
+          app-name: 'ansalemo-node-yarn-ghactions'
           app-settings-json: '${{ secrets.NASA_API_KEY }}'
 
       - name: 'Deploy to Azure Web App'
