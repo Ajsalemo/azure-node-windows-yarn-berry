@@ -31,14 +31,12 @@ stages:
           echo ".yarn/cache checked in for 'Zero Installs', pushing cache and not running install.."
         ) ELSE IF NOT EXIST ".yarn/cache/" (
           echo ".yarn/cache doesn't exist, running yarn set version and install.."
-          echo "Checking config.."
-          yarn config -v
           echo "Setting yarn version to stable.."
-          yarn set version stable
+          call yarn set version stable
           echo "Checking yarn version.."
-          yarn -v
+          call yarn -v
           echo "Running yarn install.."
-          yarn install
+          call yarn install
         )
       displayName: 'Check for .yarn cache'
 
