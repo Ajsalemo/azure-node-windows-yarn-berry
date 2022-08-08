@@ -6,6 +6,9 @@
 trigger:
 - main
 
+pool:
+  vmImage: 'windows-latest'
+
 variables:
   # Runs with iisnode were tested with 'windows-latest'
   # This can also be set as 'ubuntu-latest' if wanting to deploy to a Linux App Service
@@ -17,9 +20,6 @@ stages:
   jobs:
   - job: Build
     displayName: Build
-    pool:
-      vmImage: $(vmImageName)
-
     steps:
     - task: NodeTool@0
       inputs:
@@ -30,11 +30,7 @@ stages:
         :: %YARN_CACHE% is set to the location of .yarn/cache/
         IF EXIST "%YARN_CACHE%" (
           echo "%YARN_CACHE% checked in for 'Zero Installs', pushing cache and not running install.."
-        )
-      displayName: 'Check for .yarn cache (skip)'
-
-    - script: |
-        IF NOT EXIST "%YARN_CACHE%" (
+        ) ELSE IF NOT EXIST "%YARN_CACHE%" (
           echo "%YARN_CACHE%" doesn't exist, running yarn set version and install.."
           echo "Checking config.."
           yarn config -v
@@ -45,7 +41,7 @@ stages:
           echo "Running yarn install.."
           yarn install
         )
-      displayName: 'Check for .yarn cache (install)'
+      displayName: 'Check for .yarn cache'
 
     - task: ArchiveFiles@2
       inputs:
@@ -66,8 +62,6 @@ stages:
   - deployment: Deploy
     displayName: Deploy
     environment: $(webAppNameVar)
-    pool:
-      vmImage: $(vmImageName)
     strategy:
       runOnce:
         deploy:
