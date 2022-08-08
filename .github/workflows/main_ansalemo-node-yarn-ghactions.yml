@@ -54,11 +54,17 @@ jobs:
         with:
           name: node-app
 
+      - uses: azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
+
       - name: Set AppSettings
         uses: Azure/appservice-settings@v1
         with:
           app-name: 'ansalemo-node-yarn-ghactions'
           app-settings-json: '${{ secrets.NASA_API_KEY }}'
+      - run: |
+          az logout
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
@@ -68,3 +74,5 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_05E8DF5413874179B08A22F2E7CFA921 }}
           package: .
+
+
