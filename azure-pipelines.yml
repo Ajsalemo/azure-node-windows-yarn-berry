@@ -32,8 +32,8 @@ stages:
           echo "%YARN_CACHE% checked in for 'Zero Installs', pushing cache and not running install.."
         ) ELSE IF NOT EXIST "%YARN_CACHE%" (
           echo "%YARN_CACHE%" doesn't exist, running yarn set version and install.."
-          echo "Installing corepack.."
-          npm i -g corepack
+          echo "Checking config.."
+          yarn config -v
           echo "Setting yarn version to stable.."
           yarn set version stable
           echo "Checking yarn version.."
