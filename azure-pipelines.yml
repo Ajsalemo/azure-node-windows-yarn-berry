@@ -27,11 +27,11 @@ stages:
       displayName: 'Install Node.js'
 
     - script: |
-        :: %YARN_CACHE% is set to the location of .yarn/cache/
-        IF EXIST "%YARN_CACHE%" (
-          echo "%YARN_CACHE% checked in for 'Zero Installs', pushing cache and not running install.."
-        ) ELSE IF NOT EXIST "%YARN_CACHE%" (
-          echo "%YARN_CACHE%" doesn't exist, running yarn set version and install.."
+        :: %YARN_BERRY_CACHE% is set to the location of .yarn/cache/
+        IF EXIST "%YARN_BERRY_CACHE%" (
+          echo "%YARN_BERRY_CACHE% checked in for 'Zero Installs', pushing cache and not running install.."
+        ) ELSE IF NOT EXIST "%YARN_BERRY_CACHE%" (
+          echo "%YARN_BERRY_CACHE%" doesn't exist, running yarn set version and install.."
           echo "Checking config.."
           yarn config -v
           echo "Setting yarn version to stable.."
