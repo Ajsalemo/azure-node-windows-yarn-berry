@@ -8,7 +8,6 @@ trigger:
 
 pool:
   # Runs with iisnode were tested with 'windows-latest'
-  # This can also be set as 'ubuntu-latest' if wanting to deploy to a Linux App Service
   vmImage: 'windows-latest'
 
 stages:
