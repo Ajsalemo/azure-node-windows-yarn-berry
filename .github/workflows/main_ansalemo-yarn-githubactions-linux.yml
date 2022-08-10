@@ -23,7 +23,6 @@ jobs:
 
       - name: Check for .yarn cache
         run: |
-          # Check for .yarn cache or install packages
           if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
             if [ -d "$DEPLOYMENT_TARGET/.yarn/cache/" ]; then
               cd "$DEPLOYMENT_TARGET"
