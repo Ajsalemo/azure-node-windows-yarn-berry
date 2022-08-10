@@ -1,0 +1,78 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy Node.js app to Azure Web App - ansalemo-node-yarn-ghactions
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Node.js version
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+
+      - name: Check for .yarn cache
+        run: |
+          if (Test-Path -Path '.yarn\cache\') {
+            echo '.yarn/cache checked in for "Zero Installs", pushing cache and not running install..'
+          } elseif (-not (Test-Path -Path '.yarn\cache\')) {
+            echo '.yarn/cache doesnt exist, running yarn set version and install..'
+            echo 'Setting yarn version to latest (3.x)..'
+            yarn set version stable
+            echo 'Checking yarn version..'
+            yarn -v
+            echo 'Running yarn install..'
+            yarn install
+          }
+      
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: node-app
+          path: .
+
+  deploy:
+    runs-on: windows-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: node-app
+
+      - uses: azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
+
+      - name: Set AppSettings
+        uses: Azure/appservice-settings@v1
+        with:
+          app-name: 'ansalemo-node-yarn-ghactions'
+          app-settings-json: '${{ secrets.NASA_API_KEY }}'
+      - run: |
+          az logout
+
+      - name: 'Deploy to Azure Web App'
+        uses: azure/webapps-deploy@v2
+        id: deploy-to-webapp
+        with:
+          app-name: 'ansalemo-node-yarn-ghactions'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_05E8DF5413874179B08A22F2E7CFA921 }}
+          package: .
+
+
